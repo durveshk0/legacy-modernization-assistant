@@ -14,8 +14,6 @@ import json
 import sqlite3
 from typing import List, Optional, Any
 import requests
-import strawberry
-from strawberry.fastapi import GraphQLRouter
 
 
 app = FastAPI(title="AS400 Modernizer Prototype")
@@ -317,3 +315,4 @@ async def root():
 if __name__ == '__main__':
     import uvicorn
     uvicorn.run(app, host='0.0.0.0', port=8000, reload=True)
+
