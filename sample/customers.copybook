@@ -1,0 +1,7 @@
+       01 CUSTOMER-RECORD.
+          05 CUST-ID          PIC 9(5).
+          05 FIRST-NAME       PIC X(10).
+          05 LAST-NAME        PIC X(15).
+          05 DOB              PIC 9(8).
+          05 PHONE            PIC X(12).
+          05 SSN              PIC 9(9).

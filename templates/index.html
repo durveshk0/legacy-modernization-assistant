@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AS/400 Modernizer UI</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f7f7f7; }
+        h1 { color: #333; }
+        form { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input[type=file] { margin-bottom: 10px; }
+        input[type=submit] { padding: 10px 20px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #eee; }
+        pre { background: #eee; padding: 10px; border-radius: 6px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; }
+    </style>
+</head>
+<body>
+    <h1>AS/400 Modernizer UI</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <br>
+        <input type="submit" value="Upload and Convert">
+    </form>
+
+    {% if result %}
+        <h2>Parsed Preview (first 10 rows)</h2>
+        <table>
+            <tr>
+                {% for col in result.columns %}
+                <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in result.preview_rows %}
+            <tr>
+                {% for col in result.columns %}
+                <td>{{ row[col] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Column Mappings</h2>
+        <table>
+            <tr><th>Original</th><th>Snake Case</th><th>CamelCase</th><th>Human</th></tr>
+            {% for m in result.mappings %}
+            <tr>
+                <td>{{ m.original }}</td>
+                <td>{{ m.snake_case }}</td>
+                <td>{{ m.camelCase }}</td>
+                <td>{{ m.human }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h2>SQL Statements</h2>
+        <h3>Create Table</h3>
+        <pre>{{ result.create_table_sql }}</pre>
+        <h3>Sample Inserts</h3>
+        <pre>{{ result.sample_insert_sql }}</pre>
+
+        <h2>JSON Preview</h2>
+        <pre>{{ json_data }}</pre>
+    {% endif %}
+</body>
+</html>
